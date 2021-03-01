@@ -66,4 +66,7 @@ class ResumoView(private val context: Context,
         }
             return corDespesa
     }
+
+    //linha
+    //linha
 }
