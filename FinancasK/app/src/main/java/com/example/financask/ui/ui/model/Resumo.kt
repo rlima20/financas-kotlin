@@ -9,6 +9,8 @@ import java.math.BigDecimal
  * fun despesa -> devolve o total de despesas da lista de transações
  * fun total -> devolve o total final, ou seja, o total de receitas menos
  * o total de despesas
+ *
+ * Lâmbda ou Função Anônima
  */
 
 class Resumo (private val transacoes: List<Transacao>){
@@ -30,6 +32,9 @@ class Resumo (private val transacoes: List<Transacao>){
                 totalDespesa = totalDespesa.plus(transacao.valor)
             }
         }
+        transacoes
+            .filter({transacao -> transacao.tipo == Tipo.RECEITA })
+            .sumByDouble({transacao ->  transacao.valor.toDouble()})
         return totalDespesa
     }
 
