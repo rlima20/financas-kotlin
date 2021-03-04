@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +16,18 @@ import com.example.financask.ui.ui.model.Tipo
 import com.example.financask.ui.ui.model.Transacao
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 import kotlinx.android.synthetic.main.form_transacao.view.*
-import kotlinx.android.synthetic.main.resumo_card.*
 import java.math.BigDecimal
+import java.text.SimpleDateFormat
 import java.util.*
 class ListaTransacoesActivity : AppCompatActivity() {
+    /**
+     * MutableListOf - Permite modificar os seus valores internos. Assim conseguimos utilizar collections
+     *  que são mutáveis.
+     *
+     *  Try Expression - Permite que o valor seja devolvido baseando-se no teste que ele fez
+     */
+
+    private val transacoes: MutableList<Transacao> = mutableListOf()
 
     /**
      * Nessa classe estou declarando uma variável que não irá ser alterada que é uma lista de Transações.
@@ -45,10 +52,8 @@ class ListaTransacoesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_transacoes)
 
-        val transacoes: List<Transacao> = transacoesDeExemplo()
-        configuraResumo(transacoes)
-        configuraLista(transacoes)
-
+        configuraResumo()
+        configuraLista()
 
         lista_transacoes_adiciona_despesa
                 .setOnClickListener {
@@ -89,27 +94,50 @@ class ListaTransacoesActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                     .setTitle("Título")
                     .setView(viewCriada)
-                    .setPositiveButton("Adicionar", null)
-                    .setNegativeButton("Cancelar", null)
+                    .setPositiveButton("Adicionar") { dialog, which ->
+                        val valorEmTexto = viewCriada.form_transacao_valor.text.toString()
+                        val dataEmTexto = viewCriada.form_transacao_data.text.toString()
+                        val categoriaEmTexto = viewCriada.form_transacao_categoria.selectedItem.toString()
+
+                        val valor = try{
+                            BigDecimal(valorEmTexto)
+                        }catch (exception: NumberFormatException){
+                            Toast.makeText(this, "Falha na conversão de valor",
+                                    Toast.LENGTH_LONG).show()
+                            BigDecimal.ZERO
+                        }
+
+                        val formatoBrasileiro = SimpleDateFormat("dd/MM/yyyy")
+                        val dataConvertida : Date = formatoBrasileiro.parse(dataEmTexto)
+                        val data = Calendar.getInstance()
+                        data.time = dataConvertida
+
+                        val transacaoCriada = Transacao(tipo = Tipo.RECEITA,
+                                valor = valor,
+                                data = data,
+                                categoria = categoriaEmTexto)
+
+                        atualizaTransacoes(transacaoCriada)
+                        lista_transacoes_adiciona_menu.close(true)
+                    }
+                    .setNegativeButton("Cancelar") { dialog, which -> }
                     .show()
         }
     }
 
-    private fun configuraResumo(transacoes: List<Transacao>) {
+    private fun atualizaTransacoes(transacao: Transacao) {
+        transacoes.add(transacao)
+        configuraLista()
+        configuraResumo()
+    }
+
+    private fun configuraResumo() {
         val view: View = window.decorView
         val resumoView = ResumoView(this, view, transacoes)
         resumoView.atualiza()
     }
 
-    private fun configuraLista(transacoes: List<Transacao>) {
+    private fun configuraLista() {
         lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
     }
-
-    private fun transacoesDeExemplo() = listOf(
-            Transacao(valor = BigDecimal(20.5), categoria = "Almoço de final de semana", tipo = Tipo.DESPESA),
-            Transacao(valor = BigDecimal(100.0), categoria = "Economia", tipo = Tipo.RECEITA),
-            Transacao(valor = BigDecimal(100.0), tipo = Tipo.DESPESA, data = Calendar.getInstance()),
-            Transacao(valor = BigDecimal(479.5), categoria = "Prêmio", tipo = Tipo.DESPESA),
-            Transacao(valor = BigDecimal(500), categoria = "Prêmio", tipo = Tipo.RECEITA)
-    )
 }
