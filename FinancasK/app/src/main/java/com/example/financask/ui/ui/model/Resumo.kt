@@ -11,35 +11,28 @@ import java.math.BigDecimal
  * o total de despesas
  *
  * Lâmbda ou Função Anônima
+ * Já temos um objeto subentendido dentro dela. Todas as listas de transações dentro dela
+ * Eu posso usar o it.
+ *
+ * Single expression function
+ *     fun total() : BigDecimal{
+ *return receita().subtract(despesa())
+ *} - É o mesmo que eu dizer     fun total() : BigDecimal = receita().subtract(despesa())
+ Ou     fun total() = receita().subtract(despesa())
+ *
+ *
  */
 
 class Resumo (private val transacoes: List<Transacao>){
 
-    fun receita() : BigDecimal{
-        var totalReceita = BigDecimal.ZERO
-        for (transacao in transacoes) {
-            if (transacao.tipo == Tipo.RECEITA) {
-                totalReceita = totalReceita.plus(transacao.valor)
-            }
-        }
-        return totalReceita
-    }
+    val receita get() = somaPor(Tipo.RECEITA)
+    val despesa get() = somaPor(Tipo.DESPESA)
+    val total get() = receita.subtract(despesa)
 
-    fun despesa() : BigDecimal{
-        var totalDespesa = BigDecimal.ZERO
-        for (transacao in transacoes) {
-            if (transacao.tipo == Tipo.DESPESA) {
-                totalDespesa = totalDespesa.plus(transacao.valor)
-            }
-        }
-        transacoes
-            .filter({transacao -> transacao.tipo == Tipo.RECEITA })
-            .sumByDouble({transacao ->  transacao.valor.toDouble()})
-        return totalDespesa
+    private fun somaPor(tipo: Tipo): BigDecimal{
+        val somaDeTransacoesPeloTipo = transacoes
+                .filter{ it.tipo == tipo }
+                .sumByDouble{ it.valor.toDouble()}
+        return  BigDecimal(somaDeTransacoesPeloTipo)
     }
-
-    fun total() : BigDecimal{
-        return receita().subtract(despesa())
-    }
-
 }
