@@ -14,12 +14,11 @@ import java.math.BigDecimal
  * Já temos um objeto subentendido dentro dela. Todas as listas de transações dentro dela
  * Eu posso usar o it.
  *
- * Single expression function
+ *Single-Expression Function
  *     fun total() : BigDecimal{
  *return receita().subtract(despesa())
  *} - É o mesmo que eu dizer     fun total() : BigDecimal = receita().subtract(despesa())
  Ou     fun total() = receita().subtract(despesa())
- *
  *
  */
 
