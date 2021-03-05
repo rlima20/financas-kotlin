@@ -84,7 +84,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
         lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
     }
 
-    //Essa é uma alteração
-    //Essa é outra alteração
-    //Essa é uma terceira alteração
+    private fun alteracaoRaphael(): Boolean{
+        return false
+    }
 }
