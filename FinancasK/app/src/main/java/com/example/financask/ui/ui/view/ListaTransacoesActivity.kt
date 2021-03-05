@@ -45,7 +45,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
         configuraResumo()
         configuraLista()
-        configuraFab()
+        configuraFab()//correção
     }
 
     private fun configuraFab() {
