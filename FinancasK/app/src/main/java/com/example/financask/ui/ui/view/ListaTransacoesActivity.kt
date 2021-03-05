@@ -88,8 +88,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
         val a = 1 + 2 + 3
         return false
     }
-
-
+    
     //Essa é uma alteração
     //Essa é outra alteração
     //Essa é uma terceira alteração
