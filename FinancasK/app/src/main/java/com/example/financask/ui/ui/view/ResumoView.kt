@@ -1,6 +1,5 @@
 package com.example.financask.ui.ui.view
 import android.content.Context
-import android.service.controls.templates.ControlTemplate
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.financask.R
