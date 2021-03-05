@@ -83,4 +83,6 @@ class ListaTransacoesActivity : AppCompatActivity() {
     private fun configuraLista() {
         lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
     }
+
+    //Essa é uma alteração
 }
