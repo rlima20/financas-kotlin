@@ -85,6 +85,9 @@ class ListaTransacoesActivity : AppCompatActivity() {
     }
 
     private fun alteracaoRaphael(): Boolean{
+        val a = 1 + 2
         return false
     }
+
+
 }
