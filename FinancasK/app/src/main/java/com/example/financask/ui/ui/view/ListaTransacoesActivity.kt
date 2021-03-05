@@ -95,6 +95,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
     //Essa é uma terceira alteração
 
     private fun alteracaoAdemir(): Boolean{
+        val b = 2 + 3
         return true
     }
 }
