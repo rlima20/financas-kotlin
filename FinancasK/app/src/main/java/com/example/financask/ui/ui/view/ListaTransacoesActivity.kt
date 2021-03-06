@@ -45,7 +45,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
         configuraResumo()
         configuraLista()
-        configuraFab()//correção
+        configuraFab()
     }
 
     private fun configuraFab() {
@@ -82,19 +82,5 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun configuraLista() {
         lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
-    }
-
-    private fun alteracaoRaphael(): Boolean{
-        val a = 1 + 2 + 3
-        return false
-    }
-    
-    //Essa é uma alteração
-    //Essa é outra alteração
-    //Essa é uma terceira alteração
-
-    private fun alteracaoAdemir(): Boolean{
-        val b = 2 + 3
-        return true
     }
 }
